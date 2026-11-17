@@ -1,0 +1,263 @@
+{
+  "task": "pick_diverse_bottles",
+  "seed": 1,
+  "mode": "expert",
+  "backend": "macos_metal",
+  "randomized": false,
+  "started": 1794942890.441321,
+  "upstream_commit": "ea8b21121ebb3cd201ff5b3fe361944ac94eda3f",
+  "source_sha256": {
+    "run_task.py": "fe8ec41700fe48f7b475e790c4d5b378104c7ec27f146893f62c9db65c2a3cdf",
+    "robotwin_macos/cpu_planner.py": "ef8fc739f0f81d980f9c2a06759cbcf902be94fb52c27c3d89024b4b3161e560",
+    "vendor/RoboTwin/envs/_base_task.py": "b9fea8f05725e09406878cbe60f1efef75469c9835680ae86c4afc09c70add01",
+    "vendor/RoboTwin/envs/robot/robot.py": "26dc8d015dcc58195f9b0fda86b8eccff19895474f54dad9401fd28219bad389",
+    "vendor/RoboTwin/envs/camera/camera.py": "9d4f0c7f01fceff0e7073256e32c1ddbc3995b08971fd0304fdf139a32a1098d",
+    "vendor/RoboTwin/envs/pick_diverse_bottles.py": "95ebb80fa96eafd0b7ff5518251c2a7aa42f22ef9b7cfdda4e80eac511f06151",
+    "robotwin_macos/metal_planner.py": "9b0acf14e93f8cf79a1bdd97faaedd9a54a0686cfcdf91e41b3c9fca10433b1a",
+    "robotwin_macos/metal_runtime.py": "49264f46d776427a7ae9dd5593e40efb8e1963ecaf9ac6893ec37d1b62ff972d",
+    "robotwin_macos/metal/planner.metal": "4e5a0a9d8e4aa4aac3cf0eefbeab7cffde82401b31c7a28dd329b1a707d4c7f4",
+    "robotwin_macos/metal/runtime.mm": "a8c3bc67819664ebe5afc0e27a07a4048b39d5096f07a9d34e9fe0a39c89c755"
+  },
+  "reset_pass": true,
+  "settle_windows": 1,
+  "initial_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 22.119035779932254,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 53.682049761339584,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 47.416152732803724,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 49.71327194683952,
+      "depth_nonzero": 76800
+    }
+  },
+  "initial_success": false,
+  "grasp_backoffs_m": [],
+  "plan_success": true,
+  "left_plans": 5,
+  "right_plans": 5,
+  "left_last_diagnostic": {
+    "reason": null
+  },
+  "right_last_diagnostic": {
+    "reason": null
+  },
+  "plans": {
+    "left": [
+      {
+        "status": "Success",
+        "position": [
+          1157,
+          6
+        ],
+        "velocity": [
+          1157,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          451,
+          6
+        ],
+        "velocity": [
+          451,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          227,
+          6
+        ],
+        "velocity": [
+          227,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          513,
+          6
+        ],
+        "velocity": [
+          513,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          33,
+          6
+        ],
+        "velocity": [
+          33,
+          6
+        ]
+      }
+    ],
+    "right": [
+      {
+        "status": "Success",
+        "position": [
+          1059,
+          6
+        ],
+        "velocity": [
+          1059,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          522,
+          6
+        ],
+        "velocity": [
+          522,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          245,
+          6
+        ],
+        "velocity": [
+          245,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          360,
+          6
+        ],
+        "velocity": [
+          360,
+          6
+        ]
+      },
+      {
+        "status": "Success",
+        "position": [
+          42,
+          6
+        ],
+        "velocity": [
+          42,
+          6
+        ]
+      }
+    ]
+  },
+  "final_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 62.0200655732366,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 85.76269011823693,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 91.24203739493775,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 47.94468298670095,
+      "depth_nonzero": 76800
+    }
+  },
+  "task_success": true,
+  "planned_joints_legal": true,
+  "joint_limit_excess": 0.0,
+  "passed": true,
+  "acceleration": {
+    "device": "Apple M5 Pro",
+    "kernels": {
+      "inverse_kinematics": {
+        "calls": 280,
+        "items": 4564,
+        "gpu_seconds": 1.0838814610615373,
+        "wall_seconds": 1.1332889618352056
+      },
+      "collisions": {
+        "calls": 505,
+        "items": 85970,
+        "gpu_seconds": 0.05420529283583164,
+        "wall_seconds": 0.1456038784235716
+      },
+      "quintic": {
+        "calls": 83,
+        "items": 77306,
+        "gpu_seconds": 0.0007114168256521225,
+        "wall_seconds": 0.017911873757839203
+      },
+      "forward_kinematics": {
+        "calls": 9,
+        "items": 9,
+        "gpu_seconds": 4.750071093440056e-05,
+        "wall_seconds": 0.001582123339176178
+      }
+    },
+    "physics": "cpu",
+    "rendering": "MoltenVK/Metal",
+    "cpu_solver_fallback": false
+  },
+  "elapsed_seconds": 7.511991024017334
+}

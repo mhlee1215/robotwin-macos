@@ -1,0 +1,420 @@
+{
+  "scope": "One frozen Metal implementation, all 50 tasks, seed 0. One episode per task; not a paper benchmark.",
+  "counts": {
+    "success": 27,
+    "planning_failure": 21,
+    "task_failure": 1,
+    "unstable_seed": 1,
+    "runtime_error": 0
+  },
+  "new_observed_successes_vs_development_cpu_audit": [
+    "adjust_bottle",
+    "place_container_plate"
+  ],
+  "observed_regressions_vs_development_cpu_audit": [
+    "stamp_seal"
+  ],
+  "comparison_caveat": "The historical CPU audit mixed revisions; stamp_seal regression was separately reproduced with current CPU code.",
+  "rows": [
+    {
+      "task": "adjust_bottle",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.718151807785034
+    },
+    {
+      "task": "beat_block_hammer",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 5.273947238922119
+    },
+    {
+      "task": "blocks_ranking_rgb",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 6.147653102874756
+    },
+    {
+      "task": "blocks_ranking_size",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 22.443135023117065
+    },
+    {
+      "task": "click_alarmclock",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 24.81501293182373
+    },
+    {
+      "task": "click_bell",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.112864017486572
+    },
+    {
+      "task": "dump_bin_bigbin",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 8.839921951293945
+    },
+    {
+      "task": "grab_roller",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 4.659108877182007
+    },
+    {
+      "task": "handover_block",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 11.946102142333984
+    },
+    {
+      "task": "handover_mic",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 5.788149118423462
+    },
+    {
+      "task": "hanging_mug",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 40.98058605194092
+    },
+    {
+      "task": "lift_pot",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.125978946685791
+    },
+    {
+      "task": "move_can_pot",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 17.07426381111145
+    },
+    {
+      "task": "move_pillbottle_pad",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 20.24550771713257
+    },
+    {
+      "task": "move_playingcard_away",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.577031135559082
+    },
+    {
+      "task": "move_stapler_pad",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 7.525282859802246
+    },
+    {
+      "task": "open_laptop",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 5.63232421875
+    },
+    {
+      "task": "open_microwave",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 7.5600481033325195
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "status": "unstable_seed",
+      "error": "UnStableError('Objects is unstable in seed(0), unstable objects: 001_bottle')",
+      "plan_success": null,
+      "task_success": null,
+      "elapsed_seconds": 4.88499903678894
+    },
+    {
+      "task": "pick_dual_bottles",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 15.458976984024048
+    },
+    {
+      "task": "place_a2b_left",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 4.714787244796753
+    },
+    {
+      "task": "place_a2b_right",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 4.665095090866089
+    },
+    {
+      "task": "place_bread_basket",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 15.393115997314453
+    },
+    {
+      "task": "place_bread_skillet",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 10.372901916503906
+    },
+    {
+      "task": "place_burger_fries",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 5.61687970161438
+    },
+    {
+      "task": "place_can_basket",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 24.86989974975586
+    },
+    {
+      "task": "place_cans_plasticbox",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 17.884625911712646
+    },
+    {
+      "task": "place_container_plate",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.941544055938721
+    },
+    {
+      "task": "place_dual_shoes",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 8.027053117752075
+    },
+    {
+      "task": "place_empty_cup",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.583165884017944
+    },
+    {
+      "task": "place_fan",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.734943866729736
+    },
+    {
+      "task": "place_mouse_pad",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.7163920402526855
+    },
+    {
+      "task": "place_object_basket",
+      "status": "task_failure",
+      "error": null,
+      "plan_success": true,
+      "task_success": false,
+      "elapsed_seconds": 6.581207990646362
+    },
+    {
+      "task": "place_object_scale",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 5.569917917251587
+    },
+    {
+      "task": "place_object_stand",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.588881969451904
+    },
+    {
+      "task": "place_phone_stand",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 4.653450012207031
+    },
+    {
+      "task": "place_shoe",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 6.637880086898804
+    },
+    {
+      "task": "press_stapler",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 4.745020866394043
+    },
+    {
+      "task": "put_bottles_dustbin",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 39.49174404144287
+    },
+    {
+      "task": "put_object_cabinet",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 16.358273029327393
+    },
+    {
+      "task": "rotate_qrcode",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.898297071456909
+    },
+    {
+      "task": "scan_object",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 6.070813894271851
+    },
+    {
+      "task": "shake_bottle",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 6.5683512687683105
+    },
+    {
+      "task": "shake_bottle_horizontally",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 6.7193427085876465
+    },
+    {
+      "task": "stack_blocks_three",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 9.333641767501831
+    },
+    {
+      "task": "stack_blocks_two",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 7.577404022216797
+    },
+    {
+      "task": "stack_bowls_three",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 7.97521185874939
+    },
+    {
+      "task": "stack_bowls_two",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 7.634045839309692
+    },
+    {
+      "task": "stamp_seal",
+      "status": "planning_failure",
+      "error": null,
+      "plan_success": false,
+      "task_success": false,
+      "elapsed_seconds": 14.0620698928833
+    },
+    {
+      "task": "turn_switch",
+      "status": "success",
+      "error": null,
+      "plan_success": true,
+      "task_success": true,
+      "elapsed_seconds": 5.158514022827148
+    }
+  ]
+}

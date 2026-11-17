@@ -1,0 +1,316 @@
+diff --git a/envs/_base_task.py b/envs/_base_task.py
+index ace13e6..5c8e477 100644
+--- a/envs/_base_task.py
++++ b/envs/_base_task.py
+@@ -1,4 +1,5 @@
+ import os
++import sys
+ import re
+ import shutil
+ import sapien.core as sapien
+@@ -189,7 +190,14 @@ class Base_Task(gym.Env):
+             self.scene.step()
+         for idx, actor in enumerate(actors_list):
+             actors_pose_list.append([actor.get_pose()])
+-        check(500)
++        # Newer CPU PhysX may need longer to settle light objects. Preserve
++        # the original 3-degree stability criterion; never waive a failure.
++        for settle_window in range(32 if sys.platform == "darwin" else 1):
++            is_stable, unstable_list = True, []
++            check(500)
++            if is_stable:
++                break
++        self.settle_windows = settle_window + 1
+         return is_stable, unstable_list
+ 
+     def play_once(self):
+@@ -203,6 +211,11 @@ class Base_Task(gym.Env):
+         Set the scene
+             - Set up the basic scene: light source, viewer.
+         """
++        if sys.platform == "darwin":
++            body_config = sapien.physx.get_body_config()
++            body_config.solver_position_iterations = 32
++            body_config.solver_velocity_iterations = 4
++            sapien.physx.set_body_config(body_config)
+         self.engine = sapien.Engine()
+         # declare sapien renderer
+         from sapien.render import set_global_config
+@@ -212,10 +225,13 @@ class Base_Task(gym.Env):
+         # give renderer to sapien sim
+         self.engine.set_renderer(self.renderer)
+ 
+-        sapien.render.set_camera_shader_dir("rt")
+-        sapien.render.set_ray_tracing_samples_per_pixel(32)
+-        sapien.render.set_ray_tracing_path_depth(8)
+-        sapien.render.set_ray_tracing_denoiser("oidn")
++        if sys.platform == "darwin":
++            sapien.render.set_camera_shader_dir("default")
++        else:
++            sapien.render.set_camera_shader_dir("rt")
++            sapien.render.set_ray_tracing_samples_per_pixel(32)
++            sapien.render.set_ray_tracing_path_depth(8)
++            sapien.render.set_ray_tracing_denoiser("oidn")
+ 
+         # declare sapien scene
+         scene_config = sapien.SceneConfig()
+@@ -1195,6 +1211,12 @@ class Base_Task(gym.Env):
+             if pre_path["status"] != "Success":
+                 return False
+             pre_qpos = pre_path["position"][-1]
++            if sys.platform == "darwin":
++                planner = self.robot.left_planner if arm_tag == "left" else self.robot.right_planner
++                full_qpos = planner.robot.get_qpos().copy()
++                full_qpos[planner.indices] = pre_qpos
++                return plan_func(pose, constraint_pose=[1, 1, 1, 0, 0, 0],
++                                 last_qpos=full_qpos)["status"] == "Success"
+             return plan_func(pose)["status"] == "Success"
+ 
+         if contact_point_id is not None:
+@@ -1209,6 +1231,24 @@ class Base_Task(gym.Env):
+             if pre_pose is None:
+                 continue
+             pose = get_grasp_pose(pre_pose, pre_dis - target_dis)
++            # The pre-grasp alone may be feasible while the final approach
++            # puts fingers through the table. Reject that candidate before
++            # scoring its orientation; keep task geometry and success intact.
++            if sys.platform == "darwin":
++                feasible = False
++                for backoff in [0.0, 0.005, 0.01, 0.015, 0.02]:
++                    if backoff > max(0.0, pre_dis - target_dis):
++                        break
++                    candidate = get_grasp_pose(pre_pose, pre_dis - target_dis - backoff)
++                    if check_pose(pre_pose, candidate, arm_tag):
++                        pose, feasible = candidate, True
++                        if backoff:
++                            if not hasattr(self, "mac_grasp_backoffs"):
++                                self.mac_grasp_backoffs = []
++                            self.mac_grasp_backoffs.append(float(backoff))
++                        break
++                if not feasible:
++                    continue
+             now_dis_top_down = cal_quat_dis(
+                 pose[-4:],
+                 GRASP_DIRECTION_DIC[("top_down_little_left" if arm_tag == "right" else "top_down_little_right")],
+@@ -1273,6 +1313,9 @@ class Base_Task(gym.Env):
+             target_dis=grasp_dis,
+             contact_point_id=contact_point_id,
+         )
++        if pre_grasp_pose is None or grasp_pose is None:
++            self.plan_success = False
++            return arm_tag, []
+         if pre_grasp_pose == grasp_pose:
+             return arm_tag, [
+                 Action(arm_tag, "move", target_pose=pre_grasp_pose),
+diff --git a/envs/camera/camera.py b/envs/camera/camera.py
+index 46d960d..48886f0 100644
+--- a/envs/camera/camera.py
++++ b/envs/camera/camera.py
+@@ -2,7 +2,6 @@ import sapien.core as sapien
+ import numpy as np
+ import pdb
+ from PIL import Image, ImageColor
+-import open3d as o3d
+ import json
+ import transforms3d as t3d
+ import cv2
+@@ -12,6 +11,7 @@ import trimesh
+ import math
+ from .._GLOBAL_CONFIGS import CONFIGS_PATH
+ import os
++import sys
+ from sapien.sensor import StereoDepthSensor, StereoDepthSensorConfig
+ 
+ try:
+@@ -19,7 +19,7 @@ try:
+ 
+     def fps(points, num_points=1024, use_cuda=True):
+         K = [num_points]
+-        if use_cuda:
++        if use_cuda and torch.cuda.is_available():
+             points = torch.from_numpy(points).cuda()
+             sampled_points, indices = torch3d_ops.sample_farthest_points(points=points.unsqueeze(0), K=K)
+             sampled_points = sampled_points.squeeze(0)
+@@ -36,8 +36,34 @@ except:
+     print("missing pytorch3d")
+ 
+     def fps(points, num_points=1024, use_cuda=True):
+-        print("fps error: missing pytorch3d")
+-        exit()
++        points = np.asarray(points)
++        if len(points) == 0:
++            return points, torch.empty((1, 0), dtype=torch.int64)
++        indices = np.empty(min(num_points, len(points)), dtype=np.int64)
++        distances = np.full(len(points), np.inf)
++        farthest = 0
++        for i in range(len(indices)):
++            indices[i] = farthest
++            distances = np.minimum(distances, ((points - points[farthest]) ** 2).sum(-1))
++            farthest = int(distances.argmax())
++        return points[indices], torch.from_numpy(indices[None, :])
++
++
++# MoltenVK images are copied through host memory; point processing uses MPS.
++def mac_picture(camera, name):
++    device = "mps" if os.environ.get("ROBOTWIN_MAC_PLANNER", "metal") == "metal" else "cpu"
++    if device == "mps" and not torch.backends.mps.is_available():
++        raise RuntimeError("MPS is required for the Metal observation backend")
++    return torch.from_numpy(camera.get_picture(name)).to(device)
++
++
++_cpu_fps = fps
++def fps(points, num_points=1024, use_cuda=True):
++    if sys.platform == "darwin" and os.environ.get("ROBOTWIN_MAC_PLANNER", "metal") == "metal":
++        from robotwin_macos.metal_runtime import farthest_points
++        indices = farthest_points(points, num_points)
++        return points[indices], torch.from_numpy(indices[None, :])
++    return _cpu_fps(points, num_points, use_cuda)
+ 
+ 
+ class Camera:
+@@ -453,11 +479,12 @@ class Camera:
+         self.world_camera2.take_picture()
+ 
+         def _get_camera_pcd(camera, color=True):
+-            rgba = camera.get_picture_cuda("Color").torch()  # [H, W, 4]
+-            position = camera.get_picture_cuda("Position").torch()
++            rgba = (mac_picture(camera, "Color") if sys.platform == "darwin" else camera.get_picture_cuda("Color").torch())  # [H, W, 4]
++            position = (mac_picture(camera, "Position") if sys.platform == "darwin" else camera.get_picture_cuda("Position").torch())
+             model_matrix = camera.get_model_matrix()
+ 
+-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
++            device = position.device
++            self.pointcloud_device = str(device)
+             model_matrix = torch.tensor(model_matrix, dtype=torch.float32).to(device)
+ 
+             # Extract valid three-dimensional points and corresponding color data.
+@@ -496,11 +523,12 @@ class Camera:
+     def get_pcd(self, if_combine=False):
+ 
+         def _get_camera_pcd(camera, point_num=0):
+-            rgba = camera.get_picture_cuda("Color").torch()  # [H, W, 4]
+-            position = camera.get_picture_cuda("Position").torch()
++            rgba = (mac_picture(camera, "Color") if sys.platform == "darwin" else camera.get_picture_cuda("Color").torch())  # [H, W, 4]
++            position = (mac_picture(camera, "Position") if sys.platform == "darwin" else camera.get_picture_cuda("Position").torch())
+             model_matrix = camera.get_model_matrix()
+ 
+-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
++            device = position.device
++            self.pointcloud_device = str(device)
+             model_matrix = torch.tensor(model_matrix, dtype=torch.float32).to(device)
+ 
+             # Extract valid three-dimensional points and corresponding color data.
+diff --git a/envs/put_bottles_dustbin.py b/envs/put_bottles_dustbin.py
+index bb26da0..7f144b6 100644
+--- a/envs/put_bottles_dustbin.py
++++ b/envs/put_bottles_dustbin.py
+@@ -94,6 +94,8 @@ class put_bottles_dustbin(Base_Task):
+             else:
+                 # Grasp the bottle with right arm while moving left arm to origin
+                 right_action = self.grasp_actor(bottle, arm_tag=arm_tag, pre_grasp_dis=0.1)
++                if not self.plan_success:
++                    return self.info
+                 right_action[1][0].target_pose[2] += delta_dis
+                 right_action[1][1].target_pose[2] += delta_dis
+                 self.move(right_action, self.back_to_origin("left"))
+@@ -113,6 +115,8 @@ class put_bottles_dustbin(Base_Task):
+                     ))
+                 # Grasp the bottle with left arm (adjusted height)
+                 left_action = self.grasp_actor(bottle, arm_tag="left", pre_grasp_dis=0.1)
++                if not self.plan_success:
++                    return self.info
+                 left_action[1][0].target_pose[2] -= delta_dis
+                 left_action[1][1].target_pose[2] -= delta_dis
+                 self.move(left_action)
+diff --git a/envs/robot/__init__.py b/envs/robot/__init__.py
+index 67b8813..f950e6f 100644
+--- a/envs/robot/__init__.py
++++ b/envs/robot/__init__.py
+@@ -1,2 +1,4 @@
++import sys
+ from .robot import *
+-from .planner import *
++if sys.platform != "darwin":
++    from .planner import *
+diff --git a/envs/robot/robot.py b/envs/robot/robot.py
+index 9dfc08f..48aa25b 100644
+--- a/envs/robot/robot.py
++++ b/envs/robot/robot.py
+@@ -1,7 +1,11 @@
+ import sapien.core as sapien
+ import numpy as np
+ import pdb
+-from .planner import MplibPlanner
++import sys
++if sys.platform == "darwin":
++    from robotwin_macos.cpu_planner import CpuPlanner
++else:
++    from .planner import MplibPlanner, CuroboPlanner
+ import numpy as np
+ import toppra as ta
+ import math
+@@ -12,7 +16,6 @@ from copy import deepcopy
+ import sapien.core as sapien
+ import envs._GLOBAL_CONFIGS as CONFIGS
+ from envs.utils import transforms
+-from .planner import CuroboPlanner
+ import torch.multiprocessing as mp
+ 
+ 
+@@ -124,7 +127,9 @@ class Robot:
+     def reset(self, scene, need_topp=False, **kwargs):
+         self._init_robot_(scene, need_topp, **kwargs)
+ 
+-        if self.communication_flag:
++        if sys.platform == "darwin":
++            self.set_planner(scene=scene)
++        elif self.communication_flag:
+             if hasattr(self, "left_conn") and self.left_conn:
+                 self.left_conn.send({"cmd": "reset"})
+                 _ = self.left_conn.recv()
+@@ -255,6 +260,25 @@ class Robot:
+         print("right ee: ", self.right_ee.get_name())
+ 
+     def set_planner(self, scene=None):
++        if sys.platform == "darwin":
++            backend = os.environ.get("ROBOTWIN_MAC_PLANNER", "metal")
++            if backend == "metal":
++                from robotwin_macos.metal_planner import MetalPlanner
++                Planner = MetalPlanner
++            elif backend == "cpu":
++                Planner = CpuPlanner
++            else:
++                raise ValueError(f"Unsupported Mac planner: {backend}")
++            self.communication_flag = False
++            self.left_planner = Planner(self.left_entity, self.left_arm_joints_name,
++                                           self.left_move_group, self.left_urdf_path,
++                                           self.left_srdf_path, scene)
++            self.right_planner = Planner(self.right_entity, self.right_arm_joints_name,
++                                            self.right_move_group, self.right_urdf_path,
++                                            self.right_srdf_path, scene)
++            self.left_mplib_planner = self.left_planner
++            self.right_mplib_planner = self.right_planner
++            return
+         abs_left_curobo_yml_path = os.path.join(CONFIGS.ROOT_PATH, self.left_curobo_yml_path)
+         abs_right_curobo_yml_path = os.path.join(CONFIGS.ROOT_PATH, self.right_curobo_yml_path)
+ 
+diff --git a/envs/utils/save_file.py b/envs/utils/save_file.py
+index 53b3cda..7090e60 100644
+--- a/envs/utils/save_file.py
++++ b/envs/utils/save_file.py
+@@ -5,7 +5,6 @@ import json
+ 
+ import os
+ import pickle
+-import open3d as o3d
+ 
+ 
+ def ensure_dir(file_path):
+@@ -34,6 +33,7 @@ def save_pkl(save_path, dic_file):
+ 
+ def save_pcd(save_path, pcd_arr, color=False):
+     ensure_dir(save_path)
++    import open3d as o3d
+     point_cloud = o3d.geometry.PointCloud()
+     point_arr = pcd_arr[:, :3]
+     point_cloud.points = o3d.utility.Vector3dVector(point_arr)

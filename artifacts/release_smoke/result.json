@@ -1,0 +1,244 @@
+{
+  "task": "handover_block",
+  "seed": 0,
+  "mode": "simulator",
+  "backend": "macos_metal",
+  "randomized": false,
+  "started": 1794949989.131331,
+  "upstream_commit": "ea8b21121ebb3cd201ff5b3fe361944ac94eda3f",
+  "source_sha256": {
+    "run_task.py": "d74a0194c83507428c69ff56ea1d6c9e10c9cb8137731ce6efc5ee7d9a175aba",
+    "robotwin_macos/cpu_planner.py": "ef8fc739f0f81d980f9c2a06759cbcf902be94fb52c27c3d89024b4b3161e560",
+    "vendor/RoboTwin/envs/_base_task.py": "b9fea8f05725e09406878cbe60f1efef75469c9835680ae86c4afc09c70add01",
+    "vendor/RoboTwin/envs/robot/robot.py": "f95bb7056e92eac8a1b74e8543d25c6d68b26d9e4983a23cda675a9f26a48857",
+    "vendor/RoboTwin/envs/camera/camera.py": "72e0ccc829933370cf02bf34ac00765247485d8df82a456f6d93c5319e679393",
+    "vendor/RoboTwin/envs/handover_block.py": "5439712296d7e143d41f8e78b4ab86cd4fad7fb98f40f5f5abb067a462d17650",
+    "robotwin_macos/metal_planner.py": "9b0acf14e93f8cf79a1bdd97faaedd9a54a0686cfcdf91e41b3c9fca10433b1a",
+    "robotwin_macos/metal_runtime.py": "49264f46d776427a7ae9dd5593e40efb8e1963ecaf9ac6893ec37d1b62ff972d",
+    "robotwin_macos/metal/planner.metal": "4e5a0a9d8e4aa4aac3cf0eefbeab7cffde82401b31c7a28dd329b1a707d4c7f4",
+    "robotwin_macos/metal/runtime.mm": "a8c3bc67819664ebe5afc0e27a07a4048b39d5096f07a9d34e9fe0a39c89c755"
+  },
+  "overview_camera": {
+    "position": [
+      1.1,
+      0.25,
+      1.6
+    ],
+    "target": [
+      0.0,
+      -0.3,
+      1.0
+    ],
+    "resolution": [
+      1600,
+      1200
+    ],
+    "fovy_degrees": 60
+  },
+  "physics_system": "PhysxCpuSystem",
+  "render_system": "RenderSystem",
+  "reset_pass": true,
+  "settle_windows": 1,
+  "pointcloud_shape": [
+    1024,
+    6
+  ],
+  "pointcloud_device": "mps:0",
+  "initial_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 63.02898067398865,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 41.95891963792249,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 43.88488107408879,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 46.95116457668285,
+      "depth_nonzero": 76800
+    }
+  },
+  "initial_success": false,
+  "measurement_source": "SAPIEN articulation qpos/qvel, not drive targets",
+  "hold_seconds_after_command": 1.0,
+  "outbound_joint_error_rad": [
+    0.0008891722559928872,
+    0.0008894218504428841
+  ],
+  "arm_motion_rad": [
+    0.0591109586162446,
+    0.05911043325122023
+  ],
+  "gripper_motion_normalized": [
+    0.5715578117153861,
+    0.5716761912811886
+  ],
+  "moving_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 50.97538945043266,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 37.737707689934744,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 40.52521289207023,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 46.97715232558658,
+      "depth_nonzero": 76800
+    }
+  },
+  "return_joint_error_rad": [
+    0.0006738643278367817,
+    0.0006739745731465518
+  ],
+  "simulator_action_calls": 2,
+  "ik_calls": 0,
+  "final_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 62.90076971595304,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 41.79986898860853,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 43.866801169619,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 46.95116457668285,
+      "depth_nonzero": 76800
+    }
+  },
+  "task_success": false,
+  "passed": true,
+  "reset_cameras": {
+    "left_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 63.02898067398865,
+      "depth_nonzero": 76800
+    },
+    "right_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 41.95891963792249,
+      "depth_nonzero": 76800
+    },
+    "head_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 43.88488107408879,
+      "depth_nonzero": 76800
+    },
+    "front_camera": {
+      "shape": [
+        240,
+        320,
+        3
+      ],
+      "std": 46.95116457668285,
+      "depth_nonzero": 76800
+    }
+  },
+  "reset_reinitialization_passed": true,
+  "acceleration": {
+    "device": "Apple M5 Pro",
+    "kernels": {
+      "farthest_points": {
+        "calls": 4,
+        "items": 1024,
+        "gpu_seconds": 0.012399292085319757,
+        "wall_seconds": 0.013401373755186796
+      },
+      "quintic": {
+        "calls": 4,
+        "items": 424,
+        "gpu_seconds": 0.0010488750413060188,
+        "wall_seconds": 0.001959958579391241
+      }
+    },
+    "physics": "cpu",
+    "rendering": "MoltenVK/Metal",
+    "cpu_solver_fallback": false
+  },
+  "elapsed_seconds": 10.148226261138916
+}

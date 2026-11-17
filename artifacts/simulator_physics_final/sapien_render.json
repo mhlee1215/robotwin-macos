@@ -1,0 +1,10 @@
+{
+  "sapien": "3.0.3",
+  "cube_final_z": 0.04999995231628418,
+  "joint_target": 0.5,
+  "joint_final": 0.4975402355194092,
+  "physics_pass": true,
+  "render_pass": true,
+  "rgb_std": 0.07103225588798523,
+  "valid_depth_pixels": 74240
+}

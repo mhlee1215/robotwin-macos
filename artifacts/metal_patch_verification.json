@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "files": [
+    "envs/_base_task.py",
+    "envs/camera/camera.py",
+    "envs/put_bottles_dustbin.py",
+    "envs/robot/__init__.py",
+    "envs/robot/robot.py",
+    "envs/utils/save_file.py"
+  ],
+  "patch_sha256": "9d266f68bc8999460116bb428f45c32818f64bc6c67af07fa8bc8a0dff026443"
+}

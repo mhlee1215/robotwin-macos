@@ -1,0 +1,83 @@
+{
+  "device": "Apple M5 Pro",
+  "arms": {
+    "left": {
+      "random_configs": 512,
+      "fk_max_error": 1.4958268325648838e-06,
+      "collision_disagreements": 0,
+      "ik_targets": 8,
+      "ik_max_position_error": 1.8576008000514964e-05,
+      "ik_max_angle_error": 2.2583168346218055e-06
+    },
+    "right": {
+      "random_configs": 512,
+      "fk_max_error": 1.5878116455501912e-06,
+      "collision_disagreements": 0,
+      "ik_targets": 8,
+      "ik_max_position_error": 3.4458742752634545e-05,
+      "ik_max_angle_error": 2.2770924988972403e-06
+    }
+  },
+  "timings": {
+    "left": {
+      "cpu_fk_512_s": 0.006342249922454357,
+      "metal_fk_512_s": 0.000599707942456007,
+      "cpu_collisions_512_s": 0.09195145778357983,
+      "metal_collisions_512_s": 0.001185665838420391,
+      "cpu_ik_median_s": 0.006612708559259772,
+      "metal_ik_median_s": 0.0020514156203716993
+    },
+    "right": {
+      "cpu_fk_512_s": 0.006565541960299015,
+      "metal_fk_512_s": 0.0005707084201276302,
+      "cpu_collisions_512_s": 0.09372491668909788,
+      "metal_collisions_512_s": 0.0009220829233527184,
+      "cpu_ik_median_s": 0.006183083169162273,
+      "metal_ik_median_s": 0.0019115000031888485
+    }
+  },
+  "passed": true,
+  "fps": {
+    "points": 4096,
+    "samples": 128,
+    "indices_equal": true,
+    "cpu_seconds": 0.004303459078073502,
+    "metal_seconds": 0.0017054169438779354
+  },
+  "mps": {
+    "device": "mps:0",
+    "cpu_fallback_enabled": false
+  },
+  "kernels": {
+    "forward_kinematics": {
+      "calls": 4,
+      "items": 1026,
+      "gpu_seconds": 9.933346882462502e-05,
+      "wall_seconds": 0.004579999018460512
+    },
+    "collisions": {
+      "calls": 20,
+      "items": 1042,
+      "gpu_seconds": 0.01078375056385994,
+      "wall_seconds": 0.021435292903333902
+    },
+    "inverse_kinematics": {
+      "calls": 16,
+      "items": 16,
+      "gpu_seconds": 0.007064249366521835,
+      "wall_seconds": 0.014861663803458214
+    },
+    "quintic": {
+      "calls": 10,
+      "items": 3194,
+      "gpu_seconds": 0.00022779172286391258,
+      "wall_seconds": 0.0038829585537314415
+    },
+    "farthest_points": {
+      "calls": 2,
+      "items": 512,
+      "gpu_seconds": 0.0013292087242007256,
+      "wall_seconds": 0.0023709996603429317
+    }
+  }
+}

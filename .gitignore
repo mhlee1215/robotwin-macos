@@ -1,0 +1,10 @@
+.venv
+vendor
+__pycache__/
+*.py[cod]
+robotwin_macos/metal/build/
+artifacts/
+logs/
+.DS_Store
+.env
+.env.*

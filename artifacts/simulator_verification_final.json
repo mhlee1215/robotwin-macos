@@ -1,0 +1,348 @@
+{
+  "verdict": "PASS for all 50 task environments using the explicitly recorded valid seeds",
+  "scope": "Native macOS port; ALOHA-agilex; offscreen RGB-D; direct joint/gripper commands; no expert task or IK success requirement",
+  "tasks_verified": 50,
+  "seed0_passed": 49,
+  "seed0_rejections": [
+    {
+      "task": "pick_diverse_bottles",
+      "error": "UnStableError('Objects is unstable in seed(0), unstable objects: 001_bottle')"
+    }
+  ],
+  "alternate_seed": {
+    "task": "pick_diverse_bottles",
+    "seed": 1,
+    "passed": true,
+    "evidence": "artifacts/simulator_diverse_seed1_final/result.json"
+  },
+  "measurements": {
+    "source": "actual SAPIEN articulation qpos/qvel",
+    "direct_action_calls_per_task": 2,
+    "ik_calls": 0,
+    "max_joint_target_error_rad": 0.0008894218504428841,
+    "max_joint_return_error_rad": 0.0006743376725353301,
+    "camera_count_per_task": 4,
+    "hold_seconds_after_command": 1.0
+  },
+  "randomized_observation_reset_check": {
+    "passed": true,
+    "evidence": "artifacts/simulator_canary_physical_v3/result.json"
+  },
+  "physics_check": {
+    "passed": true,
+    "evidence": "artifacts/simulator_physics_final/sapien_render.json"
+  },
+  "full_suite": "artifacts/simulator_all50_final/summary.json",
+  "visual_inspection": [
+    "artifacts/simulator_physics_final/sapien_rgb.png",
+    "artifacts/simulator_canary_physical_v3/overview_final.png"
+  ],
+  "limits": [
+    "not all seeds",
+    "default ALOHA embodiment only",
+    "interactive GUI not tested",
+    "policy inference and expert planning are separate"
+  ],
+  "task_rows": [
+    {
+      "task": "adjust_bottle",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "beat_block_hammer",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "blocks_ranking_rgb",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "blocks_ranking_size",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "click_alarmclock",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "click_bell",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "dump_bin_bigbin",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "grab_roller",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "handover_block",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "handover_mic",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "hanging_mug",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "lift_pot",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "move_can_pot",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "move_pillbottle_pad",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "move_playingcard_away",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "move_stapler_pad",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "open_laptop",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "open_microwave",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "pick_dual_bottles",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_a2b_left",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_a2b_right",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_bread_basket",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_bread_skillet",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_burger_fries",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_can_basket",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_cans_plasticbox",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_container_plate",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_dual_shoes",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_empty_cup",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_fan",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_mouse_pad",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_object_basket",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_object_scale",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_object_stand",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_phone_stand",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "place_shoe",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "press_stapler",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "put_bottles_dustbin",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "put_object_cabinet",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "rotate_qrcode",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "scan_object",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "shake_bottle",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "shake_bottle_horizontally",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "stack_blocks_three",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "stack_blocks_two",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "stack_bowls_three",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "stack_bowls_two",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "stamp_seal",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "turn_switch",
+      "seed": 0,
+      "passed": true,
+      "ik_calls": 0
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "seed": 1,
+      "passed": true,
+      "ik_calls": 0
+    }
+  ]
+}
