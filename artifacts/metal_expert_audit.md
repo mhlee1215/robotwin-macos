@@ -1,16 +1,16 @@
-# Metal 전문가 실행 검사
+# Metal expert-script audit
 
-50개 태스크를 동일 코드, seed 0으로 각 1회 실행했다. 다중 seed 논문 벤치마크 결과가 아니다.
+All 50 tasks were run once at seed 0 with the same implementation. This is not a multiseed paper benchmark.
 
-27개 성공, 21개 경로 계획 실패, 1개 동작 후 작업 실패, 1개 불안정 초기 상태 거부. 실행 코드 예외와 timeout은 0개.
+Results: 27 successes, 21 planning failures, one task failure after execution, and one unstable-initial-state rejection. There were no runtime exceptions or timeouts.
 
-이전 CPU 개발 검사에서 실패했던 adjust_bottle, place_container_plate가 성공했다. 반대로 stamp_seal은 회귀했고 현재 CPU 재실행에서는 성공했다. 이전 CPU 전체 검사는 여러 개발 버전이 섞였으므로 집계 성공률의 엄밀한 비교 실험은 아니다.
+`adjust_bottle` and `place_container_plate` succeeded after failing in the earlier CPU development audit. `stamp_seal` regressed and still succeeds when rerun with the current CPU implementation. The earlier full CPU audit mixed development revisions, so its aggregate success rate is not a controlled comparison.
 
-stamp_seal의 실패 상태/목표에 CPU IK 64회와 Metal IK 2,048개 후보(400회 반복)를 적용했지만 유효 해를 찾지 못했다. 앞선 이동·잡기 상태 차이의 영향으로 추정되며, 정확한 원인은 미확정이다. 성공 판정이나 충돌 기준을 완화하지 않았다. 진단: [stamp_diagnostic/result.json](stamp_diagnostic/result.json). 대용량 `failed_ik.npz`는 이 저장소에 포함하지 않았다.
+At the failed `stamp_seal` state and target, 64 CPU IK attempts and 2,048 Metal candidates with 400 iterations found no valid solution. Earlier motion or grasp-state differences may contribute; the exact cause is unconfirmed. Success and collision criteria were not relaxed. See the [diagnostic record](stamp_diagnostic/result.json). The large `failed_ik.npz` file is not included in this repository.
 
-pick_diverse_bottles seed 0 거부는 그대로 유지했다. 별도 seed 1에서는 Metal 전문가 동작까지 성공했다 (`metal_diverse_expert_seed1/result.json`). 이 재시도를 seed 0의 성공으로 합산하지 않는다.
+The rejection of `pick_diverse_bottles` at seed 0 is retained. A separate Metal expert run at seed 1 succeeded; see the [separate record](metal_diverse_expert_seed1/result.json). This retry is not counted as a seed 0 success.
 
-| 태스크 | 결과 |
+| Task | Result |
 |---|---|
 | adjust_bottle | success |
 | beat_block_hammer | planning_failure |
